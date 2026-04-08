@@ -1,11 +1,9 @@
 using System;
 using System.Globalization;
-using System.Linq;
-using System.Net.Mail;
 
 namespace EISOL_TestePraticoWebForms
 {
-	public partial class Tarefa1 : System.Web.UI.Page
+	public partial class Tarefa1 : BasePage
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -72,13 +70,7 @@ namespace EISOL_TestePraticoWebForms
 		{
 			// Isso é apenas um bônus!
 			// Tente fazê-lo e colocar em um lugar apropriado no código.
-			txtNome.Text = string.Empty;
-			txtCpf.Text = string.Empty;
-			txtRg.Text = string.Empty;
-			txtTelefone.Text = string.Empty;
-			txtEmail.Text = string.Empty;
-			txtDataNascimento.Text = string.Empty;
-			ddlSexo.SelectedIndex = 0;
+			LimparControles(this);
 
 			LimparValidacoes();
 		}
@@ -170,39 +162,5 @@ namespace EISOL_TestePraticoWebForms
 			valDataNascimentoInvalida.Visible = false;
 		}
 
-		private string NormalizarTexto(string valor, int maxLength)
-		{
-			if (string.IsNullOrWhiteSpace(valor))
-			{
-				return null;
-			}
-
-			var normalizado = valor.Trim();
-			return normalizado.Length <= maxLength ? normalizado : normalizado.Substring(0, maxLength);
-		}
-
-		private string SomenteDigitos(string valor)
-		{
-			if (string.IsNullOrWhiteSpace(valor))
-			{
-				return null;
-			}
-
-			var apenasDigitos = new string(valor.Where(char.IsDigit).ToArray());
-			return apenasDigitos;
-		}
-
-		private bool EmailValido(string email)
-		{
-			try
-			{
-				var address = new MailAddress(email);
-				return string.Equals(address.Address, email, StringComparison.OrdinalIgnoreCase);
-			}
-			catch
-			{
-				return false;
-			}
-		}
 	}
 }

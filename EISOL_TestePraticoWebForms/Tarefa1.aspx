@@ -55,22 +55,22 @@
                                 Nome <span class="text-danger">*</span>
                             </label>
                             <asp:TextBox ID="txtNome" runat="server" CssClass="form-control" MaxLength="200"></asp:TextBox>
-                            <asp:Label ID="valNome" runat="server" CssClass="text-danger" Visible="false">Campo Obrigatório</asp:Label>
+                            <asp:Label ID="valNome" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, RequiredField %>" />
                         </div>
                         <div class="col-md-2 col-sm-12 col-xs-12">
                             <label>
                                 CPF <span class="text-danger">*</span>
                             </label>
                             <asp:TextBox ID="txtCpf" runat="server" CssClass="form-control mask-cpf" MaxLength="14"></asp:TextBox>
-                            <asp:Label ID="valCpf" runat="server" CssClass="text-danger" Visible="false">Campo Obrigatório</asp:Label>
-                            <asp:Label ID="valCpfInvalido" runat="server" CssClass="text-danger" Visible="false">CPF inválido</asp:Label>
+                            <asp:Label ID="valCpf" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, RequiredField %>" />
+                            <asp:Label ID="valCpfInvalido" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, InvalidCpf %>" />
                         </div>
                         <div class="col-md-2 col-sm-12 col-xs-12">
                             <label>
                                 RG <span class="text-danger">*</span>
                             </label>
                             <asp:TextBox ID="txtRg" runat="server" CssClass="form-control" MaxLength="15"></asp:TextBox>
-                            <asp:Label ID="valRg" runat="server" CssClass="text-danger" Visible="false">Campo Obrigatório</asp:Label>
+                            <asp:Label ID="valRg" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, RequiredField %>" />
                         </div>
                         <div class="col-md-2 col-sm-12 col-xs-12">
                             <label>
@@ -85,7 +85,7 @@
                                 Email
                             </label>
                             <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" MaxLength="200"></asp:TextBox>
-                            <asp:Label ID="valEmail" runat="server" CssClass="text-danger" Visible="false">Email inválido</asp:Label>
+                            <asp:Label ID="valEmail" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, InvalidEmail %>" />
                         </div>
                         <div class="col-md-3 col-sm-12 col-xs-12">
                             <label>
@@ -96,15 +96,15 @@
                                 <asp:ListItem Value="M">Masculino</asp:ListItem>
                                 <asp:ListItem Value="F">Feminino</asp:ListItem>
                             </asp:DropDownList>
-                            <asp:Label ID="valSexo" runat="server" CssClass="text-danger" Visible="false">Campo Obrigatório</asp:Label>
+                            <asp:Label ID="valSexo" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, RequiredField %>" />
                         </div>
                         <div class="col-md-3 col-sm-12 col-xs-12">
                             <label>
                                 Data de nascimento <span class="text-danger">*</span>
                             </label>
                             <asp:TextBox ID="txtDataNascimento" runat="server" CssClass="form-control mask-date" placeholder="DD/MM/YYYY" MaxLength="10"></asp:TextBox>
-                            <asp:Label ID="valDataNascimento" runat="server" CssClass="text-danger" Visible="false">Campo Obrigatório</asp:Label>
-                            <asp:Label ID="valDataNascimentoInvalida" runat="server" CssClass="text-danger" Visible="false">Data inválida</asp:Label>
+                            <asp:Label ID="valDataNascimento" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, RequiredField %>" />
+                            <asp:Label ID="valDataNascimentoInvalida" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, InvalidDate %>" />
                         </div>
                     </div>
                 </div>

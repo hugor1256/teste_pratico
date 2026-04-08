@@ -63,7 +63,7 @@
                                 Nome <span class="text-danger">*</span>
                             </label>
                             <asp:TextBox ID="txtNome" runat="server" CssClass="form-control" MaxLength="200"></asp:TextBox>
-                            <asp:Label ID="valNome" runat="server" CssClass="text-danger field-error" Style="display:none;">Campo Obrigatório</asp:Label>
+                            <asp:Label ID="valNome" runat="server" CssClass="text-danger field-error" Style="display:none;" Text="<%$ Resources:Validation, RequiredField %>" />
                         </div>
                         <div class="col-md-2 col-sm-12 col-xs-12">
                             <label>
@@ -71,15 +71,15 @@
                             </label>
                              <%--Colocar máscara de CPF aqui será um bônus--%>
                             <asp:TextBox ID="txtCpf" runat="server" CssClass="form-control mask-cpf" MaxLength="14"></asp:TextBox>
-                            <asp:Label ID="valCpf" runat="server" CssClass="text-danger field-error" Style="display:none;">Campo Obrigatório</asp:Label>
-                            <asp:Label ID="valCpfInvalido" runat="server" CssClass="text-danger field-error" Style="display:none;">CPF inválido</asp:Label>
+                            <asp:Label ID="valCpf" runat="server" CssClass="text-danger field-error" Style="display:none;" Text="<%$ Resources:Validation, RequiredField %>" />
+                            <asp:Label ID="valCpfInvalido" runat="server" CssClass="text-danger field-error" Style="display:none;" Text="<%$ Resources:Validation, InvalidCpf %>" />
                         </div>
                         <div class="col-md-2 col-sm-12 col-xs-12">
                             <label>
                                 RG <span class="text-danger">*</span>
                             </label>
                             <asp:TextBox ID="txtRg" runat="server" CssClass="form-control" MaxLength="15"></asp:TextBox>
-                            <asp:Label ID="valRg" runat="server" CssClass="text-danger field-error" Style="display:none;">Campo Obrigatório</asp:Label>
+                            <asp:Label ID="valRg" runat="server" CssClass="text-danger field-error" Style="display:none;" Text="<%$ Resources:Validation, RequiredField %>" />
                         </div>
                         <div class="col-md-2 col-sm-12 col-xs-12">
                             <label>
@@ -96,7 +96,7 @@
                             </label>
                             <%--Colocar expressão regular pra validar email aqui será um bônus plus 2.0 Ultimate Edition Deluxe Ultra Master Blaster --%>
                             <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" MaxLength="200"></asp:TextBox>
-                            <asp:Label ID="valEmail" runat="server" CssClass="text-danger field-error" Style="display:none;">Email inválido</asp:Label>
+                            <asp:Label ID="valEmail" runat="server" CssClass="text-danger field-error" Style="display:none;" Text="<%$ Resources:Validation, InvalidEmail %>" />
                         </div>
                         <div class="col-md-3 col-sm-12 col-xs-12">
                             <label>
@@ -107,7 +107,7 @@
                                 <asp:ListItem Value="M">Masculino</asp:ListItem>
                                 <asp:ListItem Value="F">Feminino</asp:ListItem>
                             </asp:DropDownList>
-                            <asp:Label ID="valSexo" runat="server" CssClass="text-danger field-error" Style="display:none;">Campo Obrigatório</asp:Label>
+                            <asp:Label ID="valSexo" runat="server" CssClass="text-danger field-error" Style="display:none;" Text="<%$ Resources:Validation, RequiredField %>" />
                         </div>
                         <div class="col-md-3 col-sm-12 col-xs-12">
                             <label>
@@ -115,8 +115,8 @@
                             </label>
                             <%--Colocar máscara de data aqui será um bônus--%>
                             <asp:TextBox ID="txtDataNascimento" runat="server" CssClass="form-control mask-date" placeholder="DD/MM/YYYY" MaxLength="10"></asp:TextBox>
-                            <asp:Label ID="valDataNascimento" runat="server" CssClass="text-danger field-error" Style="display:none;">Campo Obrigatório</asp:Label>
-                            <asp:Label ID="valDataNascimentoInvalida" runat="server" CssClass="text-danger field-error" Style="display:none;">Data inválida</asp:Label>
+                            <asp:Label ID="valDataNascimento" runat="server" CssClass="text-danger field-error" Style="display:none;" Text="<%$ Resources:Validation, RequiredField %>" />
+                            <asp:Label ID="valDataNascimentoInvalida" runat="server" CssClass="text-danger field-error" Style="display:none;" Text="<%$ Resources:Validation, InvalidDate %>" />
                         </div>
                     </div>
                 </div>

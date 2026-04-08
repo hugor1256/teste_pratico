@@ -39,23 +39,30 @@
                     <h5>Faça cair...</h5>
                 </div>
                 <div class="ibox-content">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12 col-xs-12">
-                            <label>
-                                UF
-                            </label>
-                            <%--DICA: Coloque o evento OnSelectedIndexChanged pra esse cara aqui!--%>
-                            <asp:DropDownList ID="ddlUf" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlUf_SelectedIndexChanged">
-                            </asp:DropDownList>
-                        </div>
-                        <div class="col-md-6 col-sm-12 col-xs-12">
-                            <label>
-                                Cidade
-                            </label>
-                            <asp:DropDownList ID="ddlCidades" runat="server" CssClass="form-control">
-                            </asp:DropDownList>
-                        </div>
-                    </div>
+                    <asp:UpdatePanel ID="upCascata" runat="server" UpdateMode="Conditional">
+                        <ContentTemplate>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <label>
+                                        UF
+                                    </label>
+                                    <%--DICA: Coloque o evento OnSelectedIndexChanged pra esse cara aqui!--%>
+                                    <asp:DropDownList ID="ddlUf" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlUf_SelectedIndexChanged">
+                                    </asp:DropDownList>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <label>
+                                        Cidade
+                                    </label>
+                                    <asp:DropDownList ID="ddlCidades" runat="server" CssClass="form-control">
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                        </ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="ddlUf" EventName="SelectedIndexChanged" />
+                        </Triggers>
+                    </asp:UpdatePanel>
                 </div>
             </div>
         </div>

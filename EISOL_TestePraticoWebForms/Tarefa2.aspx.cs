@@ -1,11 +1,9 @@
 using System;
 using System.Globalization;
-using System.Linq;
-using System.Net.Mail;
 
 namespace EISOL_TestePraticoWebForms
 {
-	public partial class Tarefa2 : System.Web.UI.Page
+	public partial class Tarefa2 : BasePage
 	{
 		/*
          * 
@@ -177,97 +175,5 @@ namespace EISOL_TestePraticoWebForms
 			OcultarErro(valDataNascimentoInvalida);
 		}
 
-		private static void LimparControles(System.Web.UI.Control root)
-		{
-			foreach (System.Web.UI.Control control in root.Controls)
-			{
-				var textBox = control as System.Web.UI.WebControls.TextBox;
-				if (textBox != null)
-				{
-					textBox.Text = string.Empty;
-				}
-				else
-				{
-					var dropDownList = control as System.Web.UI.WebControls.DropDownList;
-					if (dropDownList != null)
-					{
-						dropDownList.SelectedIndex = 0;
-					}
-					else
-					{
-						var checkBox = control as System.Web.UI.WebControls.CheckBox;
-						if (checkBox != null)
-						{
-							checkBox.Checked = false;
-						}
-						else
-						{
-							var radioButton = control as System.Web.UI.WebControls.RadioButton;
-							if (radioButton != null)
-							{
-								radioButton.Checked = false;
-							}
-							else
-							{
-								var listBox = control as System.Web.UI.WebControls.ListBox;
-								if (listBox != null)
-								{
-									listBox.ClearSelection();
-								}
-							}
-						}
-					}
-				}
-
-				if (control.HasControls())
-				{
-					LimparControles(control);
-				}
-			}
-		}
-
-		private static string NormalizarTexto(string valor, int maxLength)
-		{
-			if (string.IsNullOrWhiteSpace(valor))
-			{
-				return null;
-			}
-
-			var normalizado = valor.Trim();
-			return normalizado.Length <= maxLength ? normalizado : normalizado.Substring(0, maxLength);
-		}
-
-		private static string SomenteDigitos(string valor)
-		{
-			if (string.IsNullOrWhiteSpace(valor))
-			{
-				return null;
-			}
-
-			return new string(valor.Where(char.IsDigit).ToArray());
-		}
-
-		private static bool EmailValido(string email)
-		{
-			try
-			{
-				var address = new MailAddress(email);
-				return string.Equals(address.Address, email, StringComparison.OrdinalIgnoreCase);
-			}
-			catch
-			{
-				return false;
-			}
-		}
-
-		private static void ExibirErro(System.Web.UI.WebControls.Label label)
-		{
-			label.Style["display"] = "block";
-		}
-
-		private static void OcultarErro(System.Web.UI.WebControls.Label label)
-		{
-			label.Style["display"] = "none";
-		}
 	}
 }
