@@ -2,7 +2,7 @@ using System.Linq;
 
 namespace EISOL_TestePraticoWebForms.Utils
 {
-	public static class DocumentoValidator
+	public static class CpfValidator
 	{
 		public static bool CpfValido(string cpf)
 		{

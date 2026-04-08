@@ -109,7 +109,7 @@ namespace EISOL_TestePraticoWebForms
 			else
 			{
 				var cpfDigits = SomenteDigitos(txtCpf.Text);
-				if (!Utils.DocumentoValidator.CpfValido(cpfDigits))
+				if (!Utils.CpfValidator.CpfValido(cpfDigits))
 				{
 					ExibirErro(valCpfInvalido);
 					valido = false;
