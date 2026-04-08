@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EISOL_TestePraticoWebForms {
-    
-    
-    public partial class SiteMaster {
-        
+namespace EISOL_TestePraticoWebForms
+{
+
+
+    public partial class SiteMaster
+    {
+
         /// <summary>
         /// MainContent control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace EISOL_TestePraticoWebForms {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
-        
+
         /// <summary>
         /// ScriptContent control.
         /// </summary>

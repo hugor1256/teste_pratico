@@ -1,4 +1,7 @@
-﻿using System;
+using System;
+using System.Globalization;
+using System.Linq;
+using System.Net.Mail;
 
 namespace EISOL_TestePraticoWebForms
 {
@@ -23,22 +26,24 @@ namespace EISOL_TestePraticoWebForms
              * */
 			var pessoa = new DAO.PESSOAS();
 
-			// Parece que faltam algumas coisas aqui! =/
+			this.divAlerta.Visible = false;
 
-			// O Objeto pessoa não parece ser uma pessoa de verdade ainda. 
-			// As pessoas não são objetos mas aqui podemos considerá-las assim =S
-			// - Faça as devidas atribuições ao objeto 'pessoa' para que ela seja uma pessoa de verdade e feliz!
+			DateTime dataNascimento;
+			if (!this.ValidarFormulario(out dataNascimento))
+			{
+				return;
+			}
 
-			// Verifique os tamanhos dos campos da tabela e a obrigatoriedade deles e faça o devido tratamento para evitar erros.
-			// - O leiaute da tabela em questão (TB_TESTE_PESSOAS) poderá ser verificado nos arquivos .sql anexados ao projeto.
-
-			/* SEU OBJETIVO (TAREFA 1)
-             * Envie um objeto com dados, passando pela camada de negócios e que possibilite salvar os dados do formulário preenchido no banco de dados.
-             */
-
-			// Coloque o seu lindo código aqui! (O_o)
+			pessoa.NOME = this.NormalizarTexto(this.txtNome.Text, 200);
+			pessoa.CPF = this.NormalizarTexto(this.SomenteDigitos(this.txtCpf.Text), 11);
+			pessoa.RG = this.NormalizarTexto(this.txtRg.Text, 15);
+			pessoa.TELEFONE = this.NormalizarTexto(this.txtTelefone.Text, 20);
+			pessoa.EMAIL = this.NormalizarTexto(this.txtEmail.Text, 200);
+			pessoa.SEXO = this.ddlSexo.SelectedValue;
+			pessoa.DATA_NASCIMENTO = dataNascimento;
 
 			this.Gravar(pessoa);
+			this.Limpar();
 		}
 
 		/// <summary>
@@ -50,7 +55,7 @@ namespace EISOL_TestePraticoWebForms
 			// Se a pessoa for uma pessoa de verdade e feliz, com certeza ela será lembrada pelo banco de dados.
 			new BLL.PESSOAS().Adicionar(pessoa);
 			this.Alertar();
-		}
+		} 
 
 		/// <summary>
 		/// Apresentar o alerta de sucesso na operação.
@@ -67,6 +72,121 @@ namespace EISOL_TestePraticoWebForms
 		{
 			// Isso é apenas um bônus!
 			// Tente fazê-lo e colocar em um lugar apropriado no código.
+			this.txtNome.Text = string.Empty;
+			this.txtCpf.Text = string.Empty;
+			this.txtRg.Text = string.Empty;
+			this.txtTelefone.Text = string.Empty;
+			this.txtEmail.Text = string.Empty;
+			this.txtDataNascimento.Text = string.Empty;
+			this.ddlSexo.SelectedIndex = 0;
+
+			this.LimparValidacoes();
+		}
+
+		private bool ValidarFormulario(out DateTime dataNascimento)
+		{
+			this.LimparValidacoes();
+			dataNascimento = DateTime.MinValue;
+
+			bool valido = true;
+
+			if (string.IsNullOrWhiteSpace(this.txtNome.Text))
+			{
+				this.valNome.Visible = true;
+				valido = false;
+			}
+
+			if (string.IsNullOrWhiteSpace(this.txtCpf.Text))
+			{
+				this.valCpf.Visible = true;
+				valido = false;
+			}
+
+			if (string.IsNullOrWhiteSpace(this.txtRg.Text))
+			{
+				this.valRg.Visible = true;
+				valido = false;
+			}
+
+			if (string.IsNullOrWhiteSpace(this.ddlSexo.SelectedValue))
+			{
+				this.valSexo.Visible = true;
+				valido = false;
+			}
+
+			string emailTexto = this.txtEmail.Text?.Trim();
+			if (!string.IsNullOrWhiteSpace(emailTexto) && !this.EmailValido(emailTexto))
+			{
+				this.valEmail.Visible = true;
+				valido = false;
+			}
+
+			string dataTexto = this.txtDataNascimento.Text?.Trim();
+			if (string.IsNullOrWhiteSpace(dataTexto))
+			{
+				this.valDataNascimento.Visible = true;
+				valido = false;
+			}
+			else
+			{
+				if (!DateTime.TryParseExact(
+						dataTexto,
+						"dd/MM/yyyy",
+						new CultureInfo("pt-BR"),
+						DateTimeStyles.None,
+						out dataNascimento))
+				{
+					this.valDataNascimento.Visible = true;
+					valido = false;
+				}
+			}
+
+			return valido;
+		}
+
+		private void LimparValidacoes()
+		{
+			this.valNome.Visible = false;
+			this.valCpf.Visible = false;
+			this.valRg.Visible = false;
+			this.valEmail.Visible = false;
+			this.valSexo.Visible = false;
+			this.valDataNascimento.Visible = false;
+		}
+
+		private string NormalizarTexto(string valor, int maxLength)
+		{
+			if (string.IsNullOrWhiteSpace(valor))
+			{
+				return null;
+			}
+
+			string normalizado = valor.Trim();
+			return normalizado.Length <= maxLength ? normalizado : normalizado.Substring(0, maxLength);
+		}
+
+		private string SomenteDigitos(string valor)
+		{
+			if (string.IsNullOrWhiteSpace(valor))
+			{
+				return null;
+			}
+
+			var apenasDigitos = new string(valor.Where(char.IsDigit).ToArray());
+			return apenasDigitos;
+		}
+
+		private bool EmailValido(string email)
+		{
+			try
+			{
+				var address = new MailAddress(email);
+				return string.Equals(address.Address, email, StringComparison.OrdinalIgnoreCase);
+			}
+			catch
+			{
+				return false;
+			}
 		}
 	}
 }
