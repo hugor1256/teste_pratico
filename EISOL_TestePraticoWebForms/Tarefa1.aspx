@@ -63,6 +63,7 @@
                             </label>
                             <asp:TextBox ID="txtCpf" runat="server" CssClass="form-control mask-cpf" MaxLength="14"></asp:TextBox>
                             <asp:Label ID="valCpf" runat="server" CssClass="text-danger" Visible="false">Campo Obrigatório</asp:Label>
+                            <asp:Label ID="valCpfInvalido" runat="server" CssClass="text-danger" Visible="false">CPF inválido</asp:Label>
                         </div>
                         <div class="col-md-2 col-sm-12 col-xs-12">
                             <label>
@@ -103,6 +104,7 @@
                             </label>
                             <asp:TextBox ID="txtDataNascimento" runat="server" CssClass="form-control mask-date" placeholder="DD/MM/YYYY" MaxLength="10"></asp:TextBox>
                             <asp:Label ID="valDataNascimento" runat="server" CssClass="text-danger" Visible="false">Campo Obrigatório</asp:Label>
+                            <asp:Label ID="valDataNascimentoInvalida" runat="server" CssClass="text-danger" Visible="false">Data inválida</asp:Label>
                         </div>
                     </div>
                 </div>
@@ -111,7 +113,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <asp:Button ID="btnGravar" runat="server" Text="Gravar" CssClass="btn btn-default" OnClick="btnGravar_Click" OnClientClick="return showPageLoading();" />
+            <asp:Button ID="btnGravar" runat="server" Text="Gravar" CssClass="btn btn-default" OnClick="btnGravar_Click" OnClientClick="return PageLoading.show();" />
             <a class="btn btn-primary" href="Default.aspx">Voltar</a>
         </div>
     </div>
@@ -133,15 +135,7 @@
 
 <asp:Content ID="ScriptContent1" ContentPlaceHolderID="ScriptContent" runat="server">
     <link href="Content/page-loading.css" rel="stylesheet" />
-    <script src="Scripts/jquery.mask.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" type="text/javascript"></script>
     <script src="Scripts/mask-init.js" type="text/javascript"></script>
     <script src="Scripts/page-loading.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        function showPageLoading() {
-            if (window.PageLoading && window.PageLoading.show) {
-                window.PageLoading.show();
-            }
-            return true;
-        }
-    </script>
 </asp:Content>

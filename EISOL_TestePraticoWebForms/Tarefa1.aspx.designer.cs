@@ -60,6 +60,15 @@ namespace EISOL_TestePraticoWebForms
         protected global::System.Web.UI.WebControls.Label valCpf;
 
         /// <summary>
+        /// valCpfInvalido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label valCpfInvalido;
+
+        /// <summary>
         /// txtRg control.
         /// </summary>
         /// <remarks>
@@ -139,6 +148,15 @@ namespace EISOL_TestePraticoWebForms
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label valDataNascimento;
+
+        /// <summary>
+        /// valDataNascimentoInvalida control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label valDataNascimentoInvalida;
 
         /// <summary>
         /// btnGravar control.

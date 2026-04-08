@@ -26,24 +26,24 @@ namespace EISOL_TestePraticoWebForms
              * */
 			var pessoa = new DAO.PESSOAS();
 
-			this.divAlerta.Visible = false;
+			divAlerta.Visible = false;
 
 			DateTime dataNascimento;
-			if (!this.ValidarFormulario(out dataNascimento))
+			if (!ValidarFormulario(out dataNascimento))
 			{
 				return;
 			}
 
-			pessoa.NOME = this.NormalizarTexto(this.txtNome.Text, 200);
-			pessoa.CPF = this.NormalizarTexto(this.SomenteDigitos(this.txtCpf.Text), 11);
-			pessoa.RG = this.NormalizarTexto(this.txtRg.Text, 15);
-			pessoa.TELEFONE = this.NormalizarTexto(this.txtTelefone.Text, 20);
-			pessoa.EMAIL = this.NormalizarTexto(this.txtEmail.Text, 200);
-			pessoa.SEXO = this.ddlSexo.SelectedValue;
+			pessoa.NOME = NormalizarTexto(txtNome.Text, 200);
+			pessoa.CPF = NormalizarTexto(SomenteDigitos(txtCpf.Text), 11);
+			pessoa.RG = NormalizarTexto(txtRg.Text, 15);
+			pessoa.TELEFONE = NormalizarTexto(txtTelefone.Text, 20);
+			pessoa.EMAIL = NormalizarTexto(txtEmail.Text, 200);
+			pessoa.SEXO = ddlSexo.SelectedValue;
 			pessoa.DATA_NASCIMENTO = dataNascimento;
 
-			this.Gravar(pessoa);
-			this.Limpar();
+			Gravar(pessoa);
+			Limpar();
 		}
 
 		/// <summary>
@@ -54,7 +54,7 @@ namespace EISOL_TestePraticoWebForms
 		{
 			// Se a pessoa for uma pessoa de verdade e feliz, com certeza ela será lembrada pelo banco de dados.
 			new BLL.PESSOAS().Adicionar(pessoa);
-			this.Alertar();
+			Alertar();
 		} 
 
 		/// <summary>
@@ -62,7 +62,7 @@ namespace EISOL_TestePraticoWebForms
 		/// </summary>
 		private void Alertar()
 		{
-			this.divAlerta.Visible = true;
+			divAlerta.Visible = true;
 		}
 
 		/// <summary>
@@ -72,86 +72,102 @@ namespace EISOL_TestePraticoWebForms
 		{
 			// Isso é apenas um bônus!
 			// Tente fazê-lo e colocar em um lugar apropriado no código.
-			this.txtNome.Text = string.Empty;
-			this.txtCpf.Text = string.Empty;
-			this.txtRg.Text = string.Empty;
-			this.txtTelefone.Text = string.Empty;
-			this.txtEmail.Text = string.Empty;
-			this.txtDataNascimento.Text = string.Empty;
-			this.ddlSexo.SelectedIndex = 0;
+			txtNome.Text = string.Empty;
+			txtCpf.Text = string.Empty;
+			txtRg.Text = string.Empty;
+			txtTelefone.Text = string.Empty;
+			txtEmail.Text = string.Empty;
+			txtDataNascimento.Text = string.Empty;
+			ddlSexo.SelectedIndex = 0;
 
-			this.LimparValidacoes();
+			LimparValidacoes();
 		}
 
 		private bool ValidarFormulario(out DateTime dataNascimento)
 		{
-			this.LimparValidacoes();
+			LimparValidacoes();
 			dataNascimento = DateTime.MinValue;
 
-			bool valido = true;
+			var valido = true;
 
-			if (string.IsNullOrWhiteSpace(this.txtNome.Text))
+			if (string.IsNullOrWhiteSpace(txtNome.Text))
 			{
-				this.valNome.Visible = true;
+				valNome.Visible = true;
 				valido = false;
 			}
 
-			if (string.IsNullOrWhiteSpace(this.txtCpf.Text))
+			if (string.IsNullOrWhiteSpace(txtCpf.Text))
 			{
-				this.valCpf.Visible = true;
-				valido = false;
-			}
-
-			if (string.IsNullOrWhiteSpace(this.txtRg.Text))
-			{
-				this.valRg.Visible = true;
-				valido = false;
-			}
-
-			if (string.IsNullOrWhiteSpace(this.ddlSexo.SelectedValue))
-			{
-				this.valSexo.Visible = true;
-				valido = false;
-			}
-
-			string emailTexto = this.txtEmail.Text?.Trim();
-			if (!string.IsNullOrWhiteSpace(emailTexto) && !this.EmailValido(emailTexto))
-			{
-				this.valEmail.Visible = true;
-				valido = false;
-			}
-
-			string dataTexto = this.txtDataNascimento.Text?.Trim();
-			if (string.IsNullOrWhiteSpace(dataTexto))
-			{
-				this.valDataNascimento.Visible = true;
+				valCpf.Visible = true;
 				valido = false;
 			}
 			else
 			{
-				if (!DateTime.TryParseExact(
-						dataTexto,
-						"dd/MM/yyyy",
-						new CultureInfo("pt-BR"),
-						DateTimeStyles.None,
-						out dataNascimento))
+				var cpfDigits = SomenteDigitos(txtCpf.Text);
+				if (!Utils.DocumentoValidator.CpfValido(cpfDigits))
 				{
-					this.valDataNascimento.Visible = true;
+					valCpfInvalido.Visible = true;
 					valido = false;
 				}
 			}
+
+			if (string.IsNullOrWhiteSpace(txtRg.Text))
+			{
+				valRg.Visible = true;
+				valido = false;
+			}
+
+			if (string.IsNullOrWhiteSpace(ddlSexo.SelectedValue))
+			{
+				valSexo.Visible = true;
+				valido = false;
+			}
+
+			var emailTexto = txtEmail.Text?.Trim();
+			if (!string.IsNullOrWhiteSpace(emailTexto) && !EmailValido(emailTexto))
+			{
+				valEmail.Visible = true;
+				valido = false;
+			}
+
+			var dataTexto = txtDataNascimento.Text?.Trim();
+			if (string.IsNullOrWhiteSpace(dataTexto))
+			{
+				valDataNascimento.Visible = true;
+				valido = false;
+			}
+			else
+			{
+					if (!DateTime.TryParseExact(
+							dataTexto,
+							"dd/MM/yyyy",
+							new CultureInfo("pt-BR"),
+							DateTimeStyles.None,
+							out dataNascimento))
+					{
+						valDataNascimento.Visible = true;
+						valido = false;
+					}
+					else if (dataNascimento.Date > DateTime.Today)
+					{
+						valDataNascimentoInvalida.Visible = true;
+						valido = false;
+					}
+				}
 
 			return valido;
 		}
 
 		private void LimparValidacoes()
 		{
-			this.valNome.Visible = false;
-			this.valCpf.Visible = false;
-			this.valRg.Visible = false;
-			this.valEmail.Visible = false;
-			this.valSexo.Visible = false;
-			this.valDataNascimento.Visible = false;
+			valNome.Visible = false;
+			valCpf.Visible = false;
+			valCpfInvalido.Visible = false;
+			valRg.Visible = false;
+			valEmail.Visible = false;
+			valSexo.Visible = false;
+			valDataNascimento.Visible = false;
+			valDataNascimentoInvalida.Visible = false;
 		}
 
 		private string NormalizarTexto(string valor, int maxLength)
@@ -161,7 +177,7 @@ namespace EISOL_TestePraticoWebForms
 				return null;
 			}
 
-			string normalizado = valor.Trim();
+			var normalizado = valor.Trim();
 			return normalizado.Length <= maxLength ? normalizado : normalizado.Substring(0, maxLength);
 		}
 

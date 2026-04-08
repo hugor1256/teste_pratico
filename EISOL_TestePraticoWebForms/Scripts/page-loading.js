@@ -6,6 +6,7 @@
         if (el) {
             el.className = "page-loading is-visible";
         }
+        return true;
     }
 
     function hide() {
@@ -13,6 +14,7 @@
         if (el) {
             el.className = "page-loading";
         }
+        return true;
     }
 
     window.PageLoading = {

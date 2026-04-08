@@ -164,7 +164,6 @@
     <Content Include="Scripts\ClientSide\tarefa3.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <Content Include="Scripts\jquery.mask.js" />
     <Content Include="Scripts\mask-init.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\page-loading.js" />
@@ -244,6 +243,7 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
+    <Compile Include="Utils\DocumentoValidator.cs" />
     <Compile Include="Tarefa1.aspx.cs">
       <DependentUpon>Tarefa1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
