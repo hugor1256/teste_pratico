@@ -6,9 +6,9 @@ namespace EISOL_TestePraticoWebForms
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!this.Page.IsPostBack)
+            if (!Page.IsPostBack)
             {
-                this.CarregarControles();
+                CarregarControles();
             }
         }
 
@@ -18,21 +18,44 @@ namespace EISOL_TestePraticoWebForms
         private void CarregarControles()
         {
             // Povoando as Unidades da Federação.
-            this.ddlUf.Items.Clear();
-            this.ddlUf.DataSource = new BLL.UF().CarregarTodos();
-            this.ddlUf.DataTextField = "NOME";
-            this.ddlUf.DataValueField = "COD_UF";
-            this.ddlUf.DataBind();
+            ddlUf.Items.Clear();
+            ddlUf.DataSource = new BLL.UF().CarregarTodos();
+            ddlUf.DataTextField = "NOME";
+            ddlUf.DataValueField = "COD_UF";
+            ddlUf.DataBind();
+            ddlUf.Items.Insert(0, new System.Web.UI.WebControls.ListItem("[Selecione]", string.Empty));
 
             // Povoando as Cidades
-            this.ddlCidades.Items.Clear();
-            this.ddlCidades.DataSource = new BLL.CIDADES().CarregarTodos();
-            this.ddlCidades.DataTextField = "NOME";
-            this.ddlCidades.DataValueField = "COD_CIDADE";
-            this.ddlCidades.DataBind();
+            LimparCidades();
         }
 
-        // Cadê o evento?
-        // É isso que você deve fazer para finalizar essa tarefa!
+        protected void ddlUf_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(ddlUf.SelectedValue))
+            {
+                LimparCidades();
+                return;
+            }
+
+            decimal codigoUf;
+            if (!decimal.TryParse(ddlUf.SelectedValue, out codigoUf))
+            {
+                LimparCidades();
+                return;
+            }
+
+            ddlCidades.Items.Clear();
+            ddlCidades.DataSource = new BLL.CIDADES().CarregarPorUF(codigoUf);
+            ddlCidades.DataTextField = "NOME";
+            ddlCidades.DataValueField = "COD_CIDADE";
+            ddlCidades.DataBind();
+            ddlCidades.Items.Insert(0, new System.Web.UI.WebControls.ListItem("[Selecione]", string.Empty));
+        }
+
+        private void LimparCidades()
+        {
+            ddlCidades.Items.Clear();
+            ddlCidades.Items.Insert(0, new System.Web.UI.WebControls.ListItem("[Selecione]", string.Empty));
+        }
     }
 }
