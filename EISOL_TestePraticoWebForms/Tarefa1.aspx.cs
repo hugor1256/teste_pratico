@@ -1,8 +1,9 @@
-﻿using System;
+using System;
+using System.Globalization;
 
 namespace EISOL_TestePraticoWebForms
 {
-	public partial class Tarefa1 : System.Web.UI.Page
+	public partial class Tarefa1 : BasePage
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -23,22 +24,24 @@ namespace EISOL_TestePraticoWebForms
              * */
 			var pessoa = new DAO.PESSOAS();
 
-			// Parece que faltam algumas coisas aqui! =/
+			divAlerta.Visible = false;
 
-			// O Objeto pessoa não parece ser uma pessoa de verdade ainda. 
-			// As pessoas não são objetos mas aqui podemos considerá-las assim =S
-			// - Faça as devidas atribuições ao objeto 'pessoa' para que ela seja uma pessoa de verdade e feliz!
+			DateTime dataNascimento;
+			if (!ValidarFormulario(out dataNascimento))
+			{
+				return;
+			}
 
-			// Verifique os tamanhos dos campos da tabela e a obrigatoriedade deles e faça o devido tratamento para evitar erros.
-			// - O leiaute da tabela em questão (TB_TESTE_PESSOAS) poderá ser verificado nos arquivos .sql anexados ao projeto.
+			pessoa.NOME = NormalizarTexto(txtNome.Text, 200);
+			pessoa.CPF = NormalizarTexto(SomenteDigitos(txtCpf.Text), 11);
+			pessoa.RG = NormalizarTexto(txtRg.Text, 15);
+			pessoa.TELEFONE = NormalizarTexto(txtTelefone.Text, 20);
+			pessoa.EMAIL = NormalizarTexto(txtEmail.Text, 200);
+			pessoa.SEXO = ddlSexo.SelectedValue;
+			pessoa.DATA_NASCIMENTO = dataNascimento;
 
-			/* SEU OBJETIVO (TAREFA 1)
-             * Envie um objeto com dados, passando pela camada de negócios e que possibilite salvar os dados do formulário preenchido no banco de dados.
-             */
-
-			// Coloque o seu lindo código aqui! (O_o)
-
-			this.Gravar(pessoa);
+			Gravar(pessoa);
+			Limpar();
 		}
 
 		/// <summary>
@@ -49,15 +52,15 @@ namespace EISOL_TestePraticoWebForms
 		{
 			// Se a pessoa for uma pessoa de verdade e feliz, com certeza ela será lembrada pelo banco de dados.
 			new BLL.PESSOAS().Adicionar(pessoa);
-			this.Alertar();
-		}
+			Alertar();
+		} 
 
 		/// <summary>
 		/// Apresentar o alerta de sucesso na operação.
 		/// </summary>
 		private void Alertar()
 		{
-			this.divAlerta.Visible = true;
+			divAlerta.Visible = true;
 		}
 
 		/// <summary>
@@ -67,6 +70,97 @@ namespace EISOL_TestePraticoWebForms
 		{
 			// Isso é apenas um bônus!
 			// Tente fazê-lo e colocar em um lugar apropriado no código.
+			LimparControles(this);
+
+			LimparValidacoes();
 		}
+
+		private bool ValidarFormulario(out DateTime dataNascimento)
+		{
+			LimparValidacoes();
+			dataNascimento = DateTime.MinValue;
+
+			var valido = true;
+
+			if (string.IsNullOrWhiteSpace(txtNome.Text))
+			{
+				valNome.Visible = true;
+				valido = false;
+			}
+
+			if (string.IsNullOrWhiteSpace(txtCpf.Text))
+			{
+				valCpf.Visible = true;
+				valido = false;
+			}
+			else
+			{
+				var cpfDigits = SomenteDigitos(txtCpf.Text);
+				if (!Utils.CpfValidator.CpfValido(cpfDigits))
+				{
+					valCpfInvalido.Visible = true;
+					valido = false;
+				}
+			}
+
+			if (string.IsNullOrWhiteSpace(txtRg.Text))
+			{
+				valRg.Visible = true;
+				valido = false;
+			}
+
+			if (string.IsNullOrWhiteSpace(ddlSexo.SelectedValue))
+			{
+				valSexo.Visible = true;
+				valido = false;
+			}
+
+			var emailTexto = txtEmail.Text?.Trim();
+			if (!string.IsNullOrWhiteSpace(emailTexto) && !EmailValido(emailTexto))
+			{
+				valEmail.Visible = true;
+				valido = false;
+			}
+
+			var dataTexto = txtDataNascimento.Text?.Trim();
+			if (string.IsNullOrWhiteSpace(dataTexto))
+			{
+				valDataNascimento.Visible = true;
+				valido = false;
+			}
+			else
+			{
+					if (!DateTime.TryParseExact(
+							dataTexto,
+							"dd/MM/yyyy",
+							new CultureInfo("pt-BR"),
+							DateTimeStyles.None,
+							out dataNascimento))
+					{
+						valDataNascimento.Visible = true;
+						valido = false;
+					}
+					else if (dataNascimento.Date > DateTime.Today)
+					{
+						valDataNascimentoInvalida.Visible = true;
+						valido = false;
+					}
+				}
+
+			return valido;
+		}
+
+		private void LimparValidacoes()
+		{
+			valNome.Visible = false;
+			valCpf.Visible = false;
+			valCpfInvalido.Visible = false;
+			valRg.Visible = false;
+			valEmail.Visible = false;
+			valSexo.Visible = false;
+			valDataNascimento.Visible = false;
+			valDataNascimentoInvalida.Visible = false;
+		}
+
 	}
 }

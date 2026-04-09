@@ -1,0 +1,33 @@
+.page-loading {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 9999;
+}
+
+.page-loading.is-visible {
+    display: flex;
+}
+
+.page-loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid #d7dee2;
+    border-top-color: #1b6d85;
+    border-radius: 50%;
+    animation: page-spin 0.9s linear infinite;
+}
+
+.page-loading-text {
+    margin-top: 10px;
+    font-weight: 600;
+    color: #1b6d85;
+}
+
+@keyframes page-spin {
+    to { transform: rotate(360deg); }
+}

@@ -52,27 +52,31 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <label>
-                                Nome
+                                Nome <span class="text-danger">*</span>
                             </label>
-                            <asp:TextBox ID="txtNome" runat="server" CssClass="form-control"></asp:TextBox>
+                            <asp:TextBox ID="txtNome" runat="server" CssClass="form-control" MaxLength="200"></asp:TextBox>
+                            <asp:Label ID="valNome" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, RequiredField %>" />
                         </div>
                         <div class="col-md-2 col-sm-12 col-xs-12">
                             <label>
-                                CPF
+                                CPF <span class="text-danger">*</span>
                             </label>
-                            <asp:TextBox ID="txtCpf" runat="server" CssClass="form-control"></asp:TextBox>
+                            <asp:TextBox ID="txtCpf" runat="server" CssClass="form-control mask-cpf" MaxLength="14"></asp:TextBox>
+                            <asp:Label ID="valCpf" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, RequiredField %>" />
+                            <asp:Label ID="valCpfInvalido" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, InvalidCpf %>" />
                         </div>
                         <div class="col-md-2 col-sm-12 col-xs-12">
                             <label>
-                                RG
+                                RG <span class="text-danger">*</span>
                             </label>
-                            <asp:TextBox ID="txtRg" runat="server" CssClass="form-control"></asp:TextBox>
+                            <asp:TextBox ID="txtRg" runat="server" CssClass="form-control" MaxLength="15"></asp:TextBox>
+                            <asp:Label ID="valRg" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, RequiredField %>" />
                         </div>
                         <div class="col-md-2 col-sm-12 col-xs-12">
                             <label>
                                 Telefone
                             </label>
-                            <asp:TextBox ID="txtTelefone" runat="server" CssClass="form-control"></asp:TextBox>
+                            <asp:TextBox ID="txtTelefone" runat="server" CssClass="form-control mask-phone" MaxLength="15"></asp:TextBox>
                         </div>
                     </div>
                     <div class="row">
@@ -80,23 +84,27 @@
                             <label>
                                 Email
                             </label>
-                            <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control"></asp:TextBox>
+                            <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" MaxLength="200"></asp:TextBox>
+                            <asp:Label ID="valEmail" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, InvalidEmail %>" />
                         </div>
                         <div class="col-md-3 col-sm-12 col-xs-12">
                             <label>
-                                Sexo
+                                Sexo <span class="text-danger">*</span>
                             </label>
                             <asp:DropDownList ID="ddlSexo" runat="server" CssClass="form-control">
-                                <asp:ListItem>[Selecione]</asp:ListItem>
+                                <asp:ListItem Value="">[Selecione]</asp:ListItem>
                                 <asp:ListItem Value="M">Masculino</asp:ListItem>
                                 <asp:ListItem Value="F">Feminino</asp:ListItem>
                             </asp:DropDownList>
+                            <asp:Label ID="valSexo" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, RequiredField %>" />
                         </div>
                         <div class="col-md-3 col-sm-12 col-xs-12">
                             <label>
-                                Data de nascimento
+                                Data de nascimento <span class="text-danger">*</span>
                             </label>
-                            <asp:TextBox ID="txtDataNascimento" runat="server" CssClass="form-control" placeholder="DD/MM/YYYY"></asp:TextBox>
+                            <asp:TextBox ID="txtDataNascimento" runat="server" CssClass="form-control mask-date" placeholder="DD/MM/YYYY" MaxLength="10"></asp:TextBox>
+                            <asp:Label ID="valDataNascimento" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, RequiredField %>" />
+                            <asp:Label ID="valDataNascimentoInvalida" runat="server" CssClass="text-danger" Visible="false" Text="<%$ Resources:Validation, InvalidDate %>" />
                         </div>
                     </div>
                 </div>
@@ -105,7 +113,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <asp:Button ID="btnGravar" runat="server" Text="Gravar" CssClass="btn btn-default" />
+            <asp:Button ID="btnGravar" runat="server" Text="Gravar" CssClass="btn btn-default" OnClick="btnGravar_Click" OnClientClick="return PageLoading.show();" />
             <a class="btn btn-primary" href="Default.aspx">Voltar</a>
         </div>
     </div>
@@ -117,4 +125,17 @@
             <strong>Muito Bom!</strong> Você conseguiu salvar os dados no banco de dados... será? Vou verificar isso depois :p.
         </div>
     </div>
+
+    <div id="pageLoading" class="page-loading">
+        <div class="page-loading-spinner" role="status" aria-hidden="true"></div>
+        <div class="page-loading-text">Carregando...</div>
+    </div>
+
+</asp:Content>
+
+<asp:Content ID="ScriptContent1" ContentPlaceHolderID="ScriptContent" runat="server">
+    <link href="Content/page-loading.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" type="text/javascript"></script>
+    <script src="Scripts/mask-init.js" type="text/javascript"></script>
+    <script src="Scripts/page-loading.js" type="text/javascript"></script>
 </asp:Content>

@@ -7,11 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EISOL_TestePraticoWebForms {
-    
-    
-    public partial class Tarefa3 {
-        
+namespace EISOL_TestePraticoWebForms
+{
+
+
+    public partial class Tarefa3
+    {
+
+        /// <summary>
+        /// upCascata control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upCascata;
+
         /// <summary>
         /// ddlUf control.
         /// </summary>
@@ -20,7 +31,7 @@ namespace EISOL_TestePraticoWebForms {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlUf;
-        
+
         /// <summary>
         /// ddlCidades control.
         /// </summary>
@@ -29,5 +40,19 @@ namespace EISOL_TestePraticoWebForms {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlCidades;
+
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new EISOL_TestePraticoWebForms.SiteMaster Master
+        {
+            get
+            {
+                return ((EISOL_TestePraticoWebForms.SiteMaster)(base.Master));
+            }
+        }
     }
 }
